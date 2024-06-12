@@ -1,35 +1,21 @@
 import java.awt.event.*;
-import javax.swing.*;
 
 public  class FallingSandMouseListener implements MouseListener, MouseMotionListener{
     
     private FallingSand fs;
-    private int[][] grid;
-    private Timer timer;
 
-    public FallingSandMouseListener(FallingSand fs ,int[][] grid) {
+    public FallingSandMouseListener(FallingSand fs) {
         this.fs = fs;
-        this.grid = grid;
-        this.timer = new Timer(100, e -> fs.refreshGrid());
     }
 
 
     public void mousePressed(MouseEvent e) {
-        updateGrid(e);
-        fs.refreshGrid();
-        timer.start();
+        int row = e.getY() / FallingSand.CELL_SIZE;
+        int col = e.getX() / FallingSand.CELL_SIZE;
+        fs.sandPlaced(row, col); // offset slightly due to difference between panel and frame.
     }
 
-    public void updateGrid(MouseEvent e) {
-        int x = e.getX() / FallingSand.CELL_SIZE;
-        int y = e.getY() / FallingSand.CELL_SIZE;
-        if(x-1 < 0) x++;
-        grid[x-1][y-3] = 1;  // offset slightly due to difference between panel and frame.
-    }
-
-    public void mouseReleased(MouseEvent e) {
-        timer.stop();
-    }
+    public void mouseReleased(MouseEvent e) {}
 
     //To fulfill the interface
     public void mouseClicked(MouseEvent e) {}
@@ -39,7 +25,7 @@ public  class FallingSandMouseListener implements MouseListener, MouseMotionList
 
     public void mouseDragged(MouseEvent e) {
         System.out.println("Mouse dragged");
-        updateGrid(e);
+        
     }
 
 
