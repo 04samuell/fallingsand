@@ -7,7 +7,7 @@ public class FallingSand {
     private JFrame frame;
     private Color color = Color.red;
     private JPanel panel;
-    private int[][] grid;
+    public int[][] grid;
     private Image offScreenImage;
 
     public static final int WIDTH = 800;
@@ -17,6 +17,7 @@ public class FallingSand {
     public FallingSand() {
         createGUI();
         frame.addMouseListener(new FallingSandMouseListener(this));
+        frame.addMouseMotionListener(new FallingSandMouseListener(this));
         ActionListener gridRefresher = new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 getNextGrid();
