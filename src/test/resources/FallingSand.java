@@ -8,6 +8,7 @@ public class FallingSand {
     private Color color = Color.red;
     private JPanel panel;
     private int[][] grid;
+    private Image offScreenImage;
 
     public static final int WIDTH = 800;
     public static final int HEIGHT = 600;
@@ -21,7 +22,7 @@ public class FallingSand {
                 getNextGrid();
             }
         };
-        Timer timer = new Timer(1, gridRefresher);
+        Timer timer = new Timer(15, gridRefresher);
         timer.start();
     }
 
@@ -33,13 +34,15 @@ public class FallingSand {
         frame.setVisible(true);
 
         panel = new JPanel();
-        panel.setBackground(Color.black);
+        
         frame.getContentPane().add(panel);
-        this.grid = getEmptyGrid();
+        offScreenImage = panel.createImage(WIDTH, HEIGHT);
+        panel.setBackground(Color.black);
+        this.grid = getZeroGrid();
     }
 
-    public int[][] getEmptyGrid() {
-        int[][] newGrid = new int[(HEIGHT / CELL_SIZE)-4][(WIDTH / CELL_SIZE)-4];
+    public int[][] getZeroGrid() {
+        int[][] newGrid = new int[(HEIGHT / CELL_SIZE)-4][(WIDTH / CELL_SIZE)];
         for (int i = 0; i < newGrid.length; i++) {
             for (int j = 0; j < newGrid[i].length; j++) {
                 newGrid[i][j] = 0;
@@ -53,8 +56,7 @@ public class FallingSand {
     }
 
     public void getNextGrid() {
-        int[][] newGrid = getEmptyGrid();
-        newGrid = getEmptyGrid();
+        int[][] newGrid = getZeroGrid();
         for (int i = 0; i < grid.length; i++) {
             for (int j = 0; j < grid[i].length; j++) {
                 determinePlacement(newGrid, i, j);
@@ -67,26 +69,43 @@ public class FallingSand {
     public void determinePlacement(int[][] newGrid, int i, int j) {
         if (grid[i][j] == 1 && i < grid.length - 1 && grid[i + 1][j] == 0) { // if cell is sand and cell below is
             newGrid[i + 1][j] = 1;
-        } else if(grid[i][j] == 1) {
+        } else if(grid[i][j] == 1 && i < grid.length -1 && j > 0 && j < grid[i].length-1 && grid[i+1][j+1] == 0 && grid[i+1][j-1] == 0) { // if in bounds and cell below taken but either side of cell below is empty
+            if(Math.random() < 0.5) {
+                newGrid[i + 1][j + 1] = 1;
+            } else {
+                newGrid[i + 1][j - 1] = 1;
+            }
+        } else if (grid[i][j] == 1 && i < grid.length -1 && j < grid[i].length-1 && grid[i+1][j+1] == 0) { // if in bounds and cell below taken but left of cell below is empty
+            newGrid[i + 1][j + 1] = 1;
+        } else if (grid[i][j] == 1 && i < grid.length -1 && j > 0 && grid[i+1][j-1] == 0) { // if in bounds and cell below taken but right of cell below is empty
+            newGrid[i + 1][j - 1] = 1;
+        }else if(grid[i][j] == 1) {
             newGrid[i][j] = 1;
         }
     }
 
-    public void shadeCell(Color color, int i, int j) {
-        Graphics g = panel.getGraphics();
+    public void shadeCell(Graphics g, Color color, int i, int j) {
         g.setColor(color);
         g.fillRect(j * CELL_SIZE, i * CELL_SIZE, CELL_SIZE, CELL_SIZE);
     }
 
     public void drawGrid() {
+        Graphics offScreenGraphics = offScreenImage.getGraphics();
+        offScreenGraphics.clearRect(0, 0, WIDTH, HEIGHT);
+        offScreenGraphics.setColor(Color.black);
+        offScreenGraphics.fillRect(0, 0, WIDTH, HEIGHT);
         for (int i = 0; i < grid.length; i++) {
             for (int j = 0; j < grid[i].length; j++) {
                 if (grid[i][j] == 1) {
-                    shadeCell(color, i, j);
-                } else {
-                    shadeCell(Color.black, i, j);
+                    shadeCell(offScreenGraphics, color, i, j);
                 }
             }
         }
+
+        Graphics panelGraphics = panel.getGraphics();
+        panelGraphics.drawImage(offScreenImage, 0, 0, panel);
+
+        offScreenGraphics.dispose();
+        panelGraphics.dispose();
     }
 }
