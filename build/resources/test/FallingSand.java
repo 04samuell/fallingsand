@@ -9,12 +9,15 @@ public class FallingSand {
     private JPanel panel;
     public Grain[][] grid;
     private Image offScreenImage;
+    private RainbowColourScheme rcs;
+    private int i = 0;
 
     public static final int WIDTH = 800;
     public static final int HEIGHT = 600;
     public static final int CELL_SIZE = 10;
 
     public FallingSand() {
+        rcs = new RainbowColourScheme();
         createGUI();
         frame.addMouseListener(new FallingSandMouseListener(this));
         frame.addMouseMotionListener(new FallingSandMouseListener(this));
@@ -53,7 +56,9 @@ public class FallingSand {
     }
 
     public void sandPlaced(int row, int col) {
-        grid[row][col] = new Grain(color);
+        if(i % 15 == 0) color = rcs.getNextColor();
+        grid[row][col] = new Grain(this.color);
+        i++;
     }
 
     public void getNextGrid() {

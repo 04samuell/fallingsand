@@ -10,7 +10,6 @@ public  class FallingSandMouseListener implements MouseListener, MouseMotionList
         this.fs = fs;
     }
 
-
     public void mousePressed(MouseEvent e) {
         int row = e.getY() / FallingSand.CELL_SIZE;
         int col = e.getX() / FallingSand.CELL_SIZE;
@@ -18,13 +17,14 @@ public  class FallingSandMouseListener implements MouseListener, MouseMotionList
     }
 
     public void mouseDragged(MouseEvent e) {
-        if(e.getY() < 30) return;
+        if(e.getY() < 30 || e.getX() >= FallingSand.WIDTH || e.getY() >= FallingSand.HEIGHT-10) return;
         int row = e.getY() / FallingSand.CELL_SIZE;
         int col = e.getX() / FallingSand.CELL_SIZE;
         handleSand(row - ERROR, col);
     }
 
     public void handleSand(int row, int col) {
+        if(fs.grid[row][col] != null) return; // if already sand there, don't place more
         fs.sandPlaced(row, col);
 
         if(Math.random() < PROBABILITY && row < fs.grid.length-1) {
