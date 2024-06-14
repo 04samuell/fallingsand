@@ -17,7 +17,7 @@ public  class FallingSandMouseListener implements MouseListener, MouseMotionList
     }
 
     public void mouseDragged(MouseEvent e) {
-        if(e.getY() < 30 || e.getX() >= FallingSand.WIDTH || e.getY() >= FallingSand.HEIGHT-10) return;
+        if(e.getX() < 0 || e.getX() < 0 || e.getY() < 30 || e.getX() >= FallingSand.WIDTH || e.getY() >= FallingSand.HEIGHT-10) return;
         int row = e.getY() / FallingSand.CELL_SIZE;
         int col = e.getX() / FallingSand.CELL_SIZE;
         handleSand(row - ERROR, col);

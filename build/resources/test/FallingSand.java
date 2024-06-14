@@ -11,6 +11,7 @@ public class FallingSand {
     private Image offScreenImage;
     private RainbowColourScheme rcs;
     private int i = 0;
+    private boolean frenzy = false;
 
     public static final int WIDTH = 800;
     public static final int HEIGHT = 600;
@@ -36,17 +37,42 @@ public class FallingSand {
         frame.setResizable(false);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
-
         panel = new JPanel();
-        
         frame.getContentPane().add(panel);
         offScreenImage = panel.createImage(WIDTH, HEIGHT);
         panel.setBackground(Color.black);
+        createAndAddMenuBar();
+        frame.setVisible(true);
         this.grid = getZeroGrid();
     }
 
+    public void createAndAddMenuBar() {
+        JMenuBar menuBar = new JMenuBar();
+        menuBar.setLayout(new FlowLayout(FlowLayout.CENTER));
+        JMenuItem clearMenuItem = new JMenuItem("Clear");
+        JCheckBoxMenuItem frenzyMenuItem = new JCheckBoxMenuItem("Frenzy");
+        clearMenuItem.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                grid = getZeroGrid();
+            }
+        });
+        frenzyMenuItem.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if(frenzyMenuItem.isSelected()) {
+                    frenzy = false;
+                } else {
+                    frenzy = true;
+                }
+            }
+        });
+        menuBar.add(clearMenuItem);
+        menuBar.add(frenzyMenuItem);
+        //menuBar.add(optionsMenu);
+        frame.setJMenuBar(menuBar);
+    }
+
     public Grain[][] getZeroGrid() {
-        Grain[][] newGrid = new Grain[(HEIGHT / CELL_SIZE)-4][(WIDTH / CELL_SIZE)];
+        Grain[][] newGrid = new Grain[(HEIGHT / CELL_SIZE)-7][(WIDTH / CELL_SIZE)];
         for (int i = 0; i < newGrid.length; i++) {
             for (int j = 0; j < newGrid[i].length; j++) {
                 newGrid[i][j] = null;
