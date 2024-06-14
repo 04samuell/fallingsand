@@ -1,9 +1,12 @@
 import java.awt.Color;
 
+/**
+ * A class to generate a rainbow color scheme.
+ *
+ */
 public class RainbowColourScheme {
 
-    private int steps = 150;
-    ;
+    private int steps = 150; // arbitrary starting point for the rainbow color scheme
     double stepSize = 1.0 / steps;
 
     /**
@@ -12,17 +15,16 @@ public class RainbowColourScheme {
      * @return
      */
     public static Color getRainbowColor(double position) {
-        // Calculate hue based on position (0 to 1 for a full circle)
-        float hue = (float) (position % 1.0);
-
-        // Set saturation and lightness to maximum for vibrant colors
+        float hue = (float) (position % 1.0); // Position is a value between 0 and 1
         float saturation = 1.0f;
         float lightness = 0.5f;
-
-        // Convert HSL to RGB
         return Color.getHSBColor(hue, saturation, lightness);
     }
 
+    /**
+     * Get the next color in the rainbow color scheme.
+     * @return the next color in the rainbow color scheme
+     */
     public Color getNextColor() {
         if(steps == 360) steps = 0;
         double position = steps * stepSize;
@@ -31,4 +33,3 @@ public class RainbowColourScheme {
         return color;
     }
 }
-

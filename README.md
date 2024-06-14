@@ -6,3 +6,7 @@
 - <code>./gradlew createMissingSourceDirs</code> to establish directory structure.
 - Set <code>defaultMainClassName</code> to java class containing main.
 - Use <code>gradle run</code> to run.
+
+## JAR Creation
+
+Make jar file with <code>jar cfm FallingSand.jar MANIFEST.MF .</code>.
