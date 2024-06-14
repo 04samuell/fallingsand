@@ -4,14 +4,13 @@ import java.awt.event.*;
 
 public class FallingSand {
 
-    private JFrame frame;
     private Color color = Color.red;
-    private JPanel panel;
     public Grain[][] grid;
     private Image offScreenImage;
     private RainbowColourScheme rcs;
+    private FallingSandGUI gui;
     private int i = 0;
-    private boolean frenzy = false;
+    public boolean frenzy = false;
 
     public static final int WIDTH = 800;
     public static final int HEIGHT = 600;
@@ -19,9 +18,11 @@ public class FallingSand {
 
     public FallingSand() {
         rcs = new RainbowColourScheme();
-        createGUI();
-        frame.addMouseListener(new FallingSandMouseListener(this));
-        frame.addMouseMotionListener(new FallingSandMouseListener(this));
+        gui = new FallingSandGUI(this);
+        gui.createGUI();
+        this.grid = getZeroGrid();
+        gui.frame.addMouseListener(new FallingSandMouseListener(this));
+        gui.frame.addMouseMotionListener(new FallingSandMouseListener(this));
         ActionListener gridRefresher = new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 getNextGrid();
@@ -95,53 +96,12 @@ public class FallingSand {
             }
         }
 
-        Graphics panelGraphics = panel.getGraphics();
-        panelGraphics.drawImage(offScreenImage, 0, 0, panel);
+        Graphics panelGraphics = gui.panel.getGraphics();
+        panelGraphics.drawImage(offScreenImage, 0, 0, gui.panel);
 
         offScreenGraphics.dispose();
         panelGraphics.dispose();
     }
-
-    
-    public void createGUI() {
-        frame = new JFrame();
-        frame.setSize(WIDTH, HEIGHT-4);
-        frame.setResizable(false);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setVisible(true);
-        panel = new JPanel();
-        frame.getContentPane().add(panel);
-        offScreenImage = panel.createImage(WIDTH, HEIGHT);
-        panel.setBackground(Color.black);
-        createAndAddMenuBar();
-        frame.setVisible(true);
-        this.grid = getZeroGrid();
-    }
-
-    public void createAndAddMenuBar() {
-        JMenuBar menuBar = new JMenuBar();
-        menuBar.setLayout(new FlowLayout(FlowLayout.CENTER));
-        JMenuItem clearMenuItem = new JMenuItem("Clear");
-        JCheckBoxMenuItem frenzyMenuItem = new JCheckBoxMenuItem("Frenzy");
-        clearMenuItem.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                grid = getZeroGrid();
-            }
-        });
-        frenzyMenuItem.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                if(frenzyMenuItem.isSelected()) {
-                    frenzy = false;
-                } else {
-                    frenzy = true;
-                }
-            }
-        });
-        menuBar.add(clearMenuItem);
-        menuBar.add(frenzyMenuItem);
-        frame.setJMenuBar(menuBar);
-    }
-
 
     public String toString() {
         return "Welcome to Falling Sand! Click and drag to place sand.";
