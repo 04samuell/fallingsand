@@ -115,4 +115,8 @@ public class FallingSand {
         offScreenGraphics.dispose();
         panelGraphics.dispose();
     }
+
+    public String toString() {
+        return "Welcome to Falling Sand! Click and drag to place sand.";
+    }
 }
