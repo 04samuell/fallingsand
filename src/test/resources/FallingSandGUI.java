@@ -26,6 +26,8 @@ public class FallingSandGUI {
         panel.setBackground(Color.black);
         createAndAddMenuBar();
         frame.setVisible(true);
+        frame.addMouseListener(new FallingSandMouseListener(fs));
+        frame.addMouseMotionListener(new FallingSandMouseListener(fs));
         
     }
 
@@ -42,9 +44,9 @@ public class FallingSandGUI {
         frenzyMenuItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if(frenzyMenuItem.isSelected()) {
-                    fs.frenzy = false;
-                } else {
                     fs.frenzy = true;
+                } else {
+                    fs.frenzy = false;
                 }
             }
         });

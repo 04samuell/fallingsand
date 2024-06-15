@@ -4,16 +4,18 @@ import java.awt.event.*;
 
 public class FallingSand {
 
-    private Color color = Color.red;
+    private Color grainColor = Color.red;
+    private Color backGroundColor = Color.black;
     public Grain[][] grid;
-    private Image offScreenImage;
     private RainbowColourScheme rcs;
     private FallingSandGUI gui;
-    private int i = 0;
+    private int numberSandPlaced = 0;
     public boolean frenzy = false;
+    public boolean placingSand = false;
+    public int frenzyCounter;
 
-    public static final int WIDTH = 800;
-    public static final int HEIGHT = 600;
+    public static final int WIDTH = 1200;
+    public static final int HEIGHT = 800;
     public static final int CELL_SIZE = 10;
 
     public FallingSand() {
@@ -21,8 +23,6 @@ public class FallingSand {
         gui = new FallingSandGUI(this);
         gui.createGUI();
         this.grid = getZeroGrid();
-        gui.frame.addMouseListener(new FallingSandMouseListener(this));
-        gui.frame.addMouseMotionListener(new FallingSandMouseListener(this));
         ActionListener gridRefresher = new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 getNextGrid();
@@ -43,9 +43,9 @@ public class FallingSand {
     }
 
     public void sandPlaced(int row, int col) {
-        if(i % 15 == 0) color = rcs.getNextColor();
-        grid[row][col] = new Grain(this.color);
-        i++;
+        if(numberSandPlaced % 15 == 0) grainColor = rcs.getNextColor();
+        grid[row][col] = new Grain(this.grainColor);
+        numberSandPlaced++;
     }
 
     public void getNextGrid() {
@@ -83,9 +83,16 @@ public class FallingSand {
     }
 
     public void drawGrid() {
-        Graphics offScreenGraphics = offScreenImage.getGraphics();
+        if(frenzy && placingSand) {
+            backGroundColor = Color.white;
+        } else {
+            backGroundColor = Color.black;
+        }
+        //System.out.println(frenzy + " " + placingSand);
+        //System.out.println(backGroundColor); 
+        Graphics offScreenGraphics = gui.offScreenImage.getGraphics();
         offScreenGraphics.clearRect(0, 0, WIDTH, HEIGHT);
-        offScreenGraphics.setColor(Color.black);
+        offScreenGraphics.setColor(backGroundColor);
         offScreenGraphics.fillRect(0, 0, WIDTH, HEIGHT);
         for (int i = 0; i < grid.length; i++) {
             for (int j = 0; j < grid[i].length; j++) {
@@ -97,16 +104,16 @@ public class FallingSand {
         }
 
         Graphics panelGraphics = gui.panel.getGraphics();
-        panelGraphics.drawImage(offScreenImage, 0, 0, gui.panel);
-
+        panelGraphics.drawImage(gui.offScreenImage, 0, 0, gui.panel);
         offScreenGraphics.dispose();
         panelGraphics.dispose();
     }
 
-
-
-
     public String toString() {
-        return "Welcome to Falling Sand! Click and drag to place sand.";
+        String result = "";
+        result += "*".repeat(60) + "\n\n";
+        result += "   Welcome to Falling Sand! Click and drag to place sand :)";
+        result += "\n\n" + "*".repeat(60);
+        return result;
     }
 }

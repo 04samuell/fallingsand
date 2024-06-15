@@ -11,13 +11,24 @@ public  class FallingSandMouseListener implements MouseListener, MouseMotionList
     }
 
     public void mousePressed(MouseEvent e) {
+        if(fs.frenzy) {
+            fs.placingSand = true;
+            fs.frenzyCounter++;
+        }
         int row = e.getY() / FallingSand.CELL_SIZE;
         int col = e.getX() / FallingSand.CELL_SIZE;
         handleSand(row - ERROR, col); 
     }
 
+    public void mouseReleased(MouseEvent e) {
+        if(fs.frenzy) {
+            fs.placingSand = false;
+            fs.frenzyCounter = 0;
+        } 
+    }
+
     public void mouseDragged(MouseEvent e) {
-        if(e.getX() < 0 || e.getX() < 0 || e.getY() < 30 || e.getX() >= FallingSand.WIDTH || e.getY() >= FallingSand.HEIGHT-10) return;
+        if(e.getX() < 0 || e.getX() < 0 || e.getY() < 30 || e.getX() >= FallingSand.WIDTH || e.getY() >= FallingSand.HEIGHT-40) return;
         int row = e.getY() / FallingSand.CELL_SIZE;
         int col = e.getX() / FallingSand.CELL_SIZE;
         handleSand(row - ERROR, col);
@@ -59,7 +70,7 @@ public  class FallingSandMouseListener implements MouseListener, MouseMotionList
     public void mouseEntered(MouseEvent e) {}
     public void mouseExited(MouseEvent e) {}
     public void mouseMoved(MouseEvent e) {}
-    public void mouseReleased(MouseEvent e) {}
+    
 
     
 }
