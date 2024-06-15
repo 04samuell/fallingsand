@@ -4,15 +4,15 @@ import java.awt.event.*;
 
 public class FallingSand {
 
-    private Color grainColor = Color.red;
-    private Color backGroundColor = Color.black;
     public Grain[][] grid;
+    private Color grainColor = Color.red;
+    private int numberSandPlaced = 0;
+    public boolean thick = false;
+    public boolean grey = false;
+    public boolean yellow = false;
+
     private RainbowColourScheme rcs;
     private FallingSandGUI gui;
-    private int numberSandPlaced = 0;
-    public boolean frenzy = false;
-    public boolean placingSand = false;
-    public int frenzyCounter;
 
     public static final int WIDTH = 1200;
     public static final int HEIGHT = 800;
@@ -43,7 +43,15 @@ public class FallingSand {
     }
 
     public void sandPlaced(int row, int col) {
-        if(numberSandPlaced % 15 == 0) grainColor = rcs.getNextColor();
+        if(grey) {
+            grid[row][col] = new Grain(Color.gray);
+            return;
+        }
+        if(yellow) {
+            grid[row][col] = new Grain(new Color(200, 200, 100));
+            return;
+        }
+        if(numberSandPlaced % 15 == 0) grainColor = rcs.getNextColor();  
         grid[row][col] = new Grain(this.grainColor);
         numberSandPlaced++;
     }
@@ -77,22 +85,16 @@ public class FallingSand {
         }
     }
 
+
     public void shadeCell(Graphics g, Color color, int i, int j) {
         g.setColor(color);
         g.fillRect(j * CELL_SIZE, i * CELL_SIZE, CELL_SIZE, CELL_SIZE);
     }
 
     public void drawGrid() {
-        if(frenzy && placingSand) {
-            backGroundColor = Color.white;
-        } else {
-            backGroundColor = Color.black;
-        }
-        //System.out.println(frenzy + " " + placingSand);
-        //System.out.println(backGroundColor); 
         Graphics offScreenGraphics = gui.offScreenImage.getGraphics();
         offScreenGraphics.clearRect(0, 0, WIDTH, HEIGHT);
-        offScreenGraphics.setColor(backGroundColor);
+        offScreenGraphics.setColor(Color.BLACK);
         offScreenGraphics.fillRect(0, 0, WIDTH, HEIGHT);
         for (int i = 0; i < grid.length; i++) {
             for (int j = 0; j < grid[i].length; j++) {
@@ -116,4 +118,5 @@ public class FallingSand {
         result += "\n\n" + "*".repeat(60);
         return result;
     }
+    
 }

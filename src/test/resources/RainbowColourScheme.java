@@ -14,13 +14,14 @@ public class RainbowColourScheme {
      * @param position
      * @return
      */
-    public static Color getRainbowColor(double position) {
+    public Color getRainbowColor(double position) {
         float hue = (float) (position % 1.0); // Position is a value between 0 and 1
         float saturation = 1.0f;
         float lightness = 0.5f;
         return Color.getHSBColor(hue, saturation, lightness);
     }
 
+    
     /**
      * Get the next color in the rainbow color scheme.
      * @return the next color in the rainbow color scheme

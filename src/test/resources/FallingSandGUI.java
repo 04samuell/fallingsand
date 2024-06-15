@@ -8,15 +8,18 @@ public class FallingSandGUI {
     public JFrame frame;
     public JPanel panel;
     public Image offScreenImage;
-    
+
+    private JCheckBoxMenuItem thickMenuItem;
+    private JRadioButtonMenuItem greyMenuItem;
+    private JRadioButtonMenuItem yellowMenuItem;
+
     public FallingSandGUI(FallingSand fs) {
         this.fs = fs;
     }
 
-        
     public void createGUI() {
         frame = new JFrame();
-        frame.setSize(FallingSand.WIDTH, FallingSand.HEIGHT-4);
+        frame.setSize(FallingSand.WIDTH, FallingSand.HEIGHT - 4);
         frame.setResizable(false);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
@@ -28,30 +31,66 @@ public class FallingSandGUI {
         frame.setVisible(true);
         frame.addMouseListener(new FallingSandMouseListener(fs));
         frame.addMouseMotionListener(new FallingSandMouseListener(fs));
-        
+
     }
 
     public void createAndAddMenuBar() {
         JMenuBar menuBar = new JMenuBar();
         menuBar.setLayout(new FlowLayout(FlowLayout.CENTER));
         JMenuItem clearMenuItem = new JMenuItem("Clear");
-        JCheckBoxMenuItem frenzyMenuItem = new JCheckBoxMenuItem("Frenzy");
-        clearMenuItem.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                fs.grid = fs.getZeroGrid();
-            }
-        });
-        frenzyMenuItem.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                if(frenzyMenuItem.isSelected()) {
-                    fs.frenzy = true;
-                } else {
-                    fs.frenzy = false;
-                }
-            }
-        });
+        
+        thickMenuItem = new JCheckBoxMenuItem("Thick Sand");
+        greyMenuItem = new JRadioButtonMenuItem("Grey Sand");
+        yellowMenuItem = new JRadioButtonMenuItem("Yellow Sand");
+        clearMenuItem.addActionListener(new ClearMenuItemListener());
+        thickMenuItem.addActionListener(new ThickSandListener());
+        greyMenuItem.addActionListener(new GreySandListener());
+        yellowMenuItem.addActionListener(new YellowSandListener());
         menuBar.add(clearMenuItem);
-        menuBar.add(frenzyMenuItem);
+        menuBar.add(thickMenuItem);
+        menuBar.add(greyMenuItem);
+        menuBar.add(yellowMenuItem);
         frame.setJMenuBar(menuBar);
     }
+
+    public class ClearMenuItemListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            fs.grid = fs.getZeroGrid();
+        }
+    }
+
+    public class ThickSandListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            if (fs.thick) {
+                fs.thick = false;
+            } else {
+                fs.thick = true;
+            }
+        }
+    }
+
+    public class GreySandListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            fs.yellow = false;
+            yellowMenuItem.setSelected(false);
+            if (fs.grey) {
+                fs.grey = false;
+            } else {
+                fs.grey = true;
+            }
+        }
+    }
+
+    public class YellowSandListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            fs.grey = false;
+            greyMenuItem.setSelected(false);
+            if(fs.yellow) {
+                fs.yellow = false;
+            } else {
+                fs.yellow = true;
+            }
+        }
+    }
+
 }

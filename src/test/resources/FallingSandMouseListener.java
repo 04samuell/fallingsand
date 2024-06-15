@@ -11,21 +11,14 @@ public  class FallingSandMouseListener implements MouseListener, MouseMotionList
     }
 
     public void mousePressed(MouseEvent e) {
-        if(fs.frenzy) {
-            fs.placingSand = true;
-            fs.frenzyCounter++;
-        }
         int row = e.getY() / FallingSand.CELL_SIZE;
         int col = e.getX() / FallingSand.CELL_SIZE;
         handleSand(row - ERROR, col); 
     }
 
     public void mouseReleased(MouseEvent e) {
-        if(fs.frenzy) {
-            fs.placingSand = false;
-            fs.frenzyCounter = 0;
-        } 
-    }
+        }
+    
 
     public void mouseDragged(MouseEvent e) {
         if(e.getX() < 0 || e.getX() < 0 || e.getY() < 30 || e.getX() >= FallingSand.WIDTH || e.getY() >= FallingSand.HEIGHT-40) return;
@@ -61,6 +54,55 @@ public  class FallingSandMouseListener implements MouseListener, MouseMotionList
         }
         if(Math.random() < PROBABILITY && row > 1 && col > 0) {
             fs.sandPlaced(row-1, col-1);
+        }
+        if(!fs.thick) return;
+        if(Math.random() < PROBABILITY && row < fs.grid.length-2 && col > 1) {
+            fs.sandPlaced(row+2, col-2);
+        }
+        if(Math.random() < PROBABILITY && row < fs.grid.length-2 && col > 0) {
+            fs.sandPlaced(row+2, col-1);
+        }
+        if(Math.random() < PROBABILITY && row < fs.grid.length-2) {
+            fs.sandPlaced(row+2, col);
+        }
+        if(Math.random() < PROBABILITY && row < fs.grid.length-1 && col < fs.grid[0].length-1) {
+            fs.sandPlaced(row+2, col+1);
+        }
+        if(Math.random() < PROBABILITY && row < fs.grid.length-1 && col < fs.grid[0].length-2) {
+            fs.sandPlaced(row+2, col+2);
+        }
+        if(Math.random() < PROBABILITY && row > 1 && col > 1) {
+            fs.sandPlaced(row-2, col-2);
+        }
+        if(Math.random() < PROBABILITY && row > 1 && col > 0) {
+            fs.sandPlaced(row-2, col-1);
+        }
+        if(Math.random() < PROBABILITY && row > 1) {
+            fs.sandPlaced(row-2, col);
+        }
+        if(Math.random() < PROBABILITY && row > 1 && col < fs.grid[0].length-1) {
+            fs.sandPlaced(row-2, col+1);
+        }
+        if(Math.random() < PROBABILITY && row > 1 && col < fs.grid[0].length-2) {
+            fs.sandPlaced(row-2, col+2);
+        }
+        if(Math.random() < PROBABILITY && col > 1) {
+            fs.sandPlaced(row, col-2);
+        }
+        if(Math.random() < PROBABILITY && col < fs.grid[0].length-2) {
+            fs.sandPlaced(row, col+2);
+        }
+        if(Math.random() < PROBABILITY && row > 0 && col > 1) {
+            fs.sandPlaced(row-1, col-2);
+        }
+        if(Math.random() < PROBABILITY && row > 0 && col < fs.grid[0].length-2) {
+            fs.sandPlaced(row-1, col+2);
+        }
+        if(Math.random() < PROBABILITY && row > 0 && col > 1) {
+            fs.sandPlaced(row+1, col-2);
+        }
+        if(Math.random() < PROBABILITY && row > 0 && col < fs.grid[0].length-2) {
+            fs.sandPlaced(row+1, col+2);
         }
 
     }
