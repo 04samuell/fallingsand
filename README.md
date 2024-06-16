@@ -1,5 +1,10 @@
 ## Falling Sand
 
+## Overview
+
+A short project to practice coding something from scratch. 
+As well as the actual system I was intersted in familiarising myself with setting up a project using vscode and using a version control system. Additionally it was an oppurtunity to learn how to use gradle and how to create jar files so that my work can be shared.
+
 ## Gradle
 
 - <code>gradle wrapper</code> to generate gradlew and gradlew.bat.
