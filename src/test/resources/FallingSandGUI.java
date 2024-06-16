@@ -2,6 +2,7 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.event.ActionEvent;
 import java.io.IOException;
 
 public class FallingSandGUI {
@@ -58,11 +59,13 @@ public class FallingSandGUI {
 
     public void setIcon() {
         try{
-            Image icon = ImageIO.read(FallingSandGUI.class.getClassLoader().getResourceAsStream("bin/sandIcon.png"));
-            System.out.println("image loaded");
+            Image icon = ImageIO.read(FallingSandGUI.class.getClassLoader().getResourceAsStream("sandIcon.png")); //test/resources/sandIcon.png
             frame.setIconImage(icon);
+        } catch(IllegalArgumentException e) {
+            //System.out.println("Image not loaded properly");
+            e.printStackTrace();
         } catch(IOException e) {
-            System.out.println("Image not found");
+            //System.out.println("Image not found");
             e.printStackTrace();
         }
     }
