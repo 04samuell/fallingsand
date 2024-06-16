@@ -16,6 +16,8 @@ public class FallingSandGUI {
     private JRadioButtonMenuItem greyMenuItem;
     private JRadioButtonMenuItem yellowMenuItem;
 
+    private static final boolean DEBUGGING = true;
+
     public FallingSandGUI(FallingSand fs) {
         this.fs = fs;
     }
@@ -59,13 +61,17 @@ public class FallingSandGUI {
 
     public void setIcon() {
         try{
-            Image icon = ImageIO.read(FallingSandGUI.class.getClassLoader().getResourceAsStream("sandIcon.png")); //test/resources/sandIcon.png
+            String filepath;
+            if(DEBUGGING) {
+                filepath = "test/resources/sandIcon.png"; // Path to icon for debugging.
+            } else {
+                filepath = "sandIcon.png"; // Path to icon for jar creation.
+            }
+            Image icon = ImageIO.read(FallingSandGUI.class.getClassLoader().getResourceAsStream(filepath));
             frame.setIconImage(icon);
         } catch(IllegalArgumentException e) {
-            //System.out.println("Image not loaded properly");
             e.printStackTrace();
         } catch(IOException e) {
-            //System.out.println("Image not found");
             e.printStackTrace();
         }
     }
