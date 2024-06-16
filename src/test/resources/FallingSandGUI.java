@@ -1,6 +1,8 @@
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.IOException;
 
 public class FallingSandGUI {
 
@@ -18,7 +20,8 @@ public class FallingSandGUI {
     }
 
     public void createGUI() {
-        frame = new JFrame();
+        frame = new JFrame("Falling Sand");
+        setIcon();
         frame.setSize(FallingSand.WIDTH, FallingSand.HEIGHT - 4);
         frame.setResizable(false);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -51,6 +54,17 @@ public class FallingSandGUI {
         menuBar.add(greyMenuItem);
         menuBar.add(yellowMenuItem);
         frame.setJMenuBar(menuBar);
+    }
+
+    public void setIcon() {
+        try{
+            Image icon = ImageIO.read(FallingSandGUI.class.getClassLoader().getResourceAsStream("bin/sandIcon.png"));
+            System.out.println("image loaded");
+            frame.setIconImage(icon);
+        } catch(IOException e) {
+            System.out.println("Image not found");
+            e.printStackTrace();
+        }
     }
 
     public class ClearMenuItemListener implements ActionListener {
