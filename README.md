@@ -8,8 +8,9 @@ As well as the actual system I was intersted in familiarising myself with settin
 
 ## Try it for yourself
 
-To play, download the jar file from here [FallingSand jar file] (https://github.com/04samuell/fallingsand/blob/main/FallingSand.jar) or download <code>FallingSand.jar</code> from root of project directory.
-Run the project by navigating to directory containing <code>.jar</code> file and run <code>java -jar FallingSand.jar</code>. 
+To play follow these steps:
+- Download the jar file: [FallingSand jar file] https://github.com/04samuell/fallingsand/blob/main/FallingSand.jar (also available in root of project directory).
+- Run the project by navigating to directory containing <code>.jar</code> file and run <code>java -jar FallingSand.jar</code>. 
 
 ## Gradle
 
