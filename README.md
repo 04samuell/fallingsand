@@ -1,9 +1,15 @@
 # Falling Sand
 
-## Overview
+Click and drag to place sand. Sand placed above 'air' will fall to the bottom and stack up creating a colourful mound.
 
 A short project to practice coding something from scratch. 
+
 As well as the actual system I was intersted in familiarising myself with setting up a project using vscode and using a version control system. Additionally it was an oppurtunity to learn how to use gradle and how to create jar files so that my work can be shared.
+
+## Try it for yourself
+
+To play, download the jar file from here [FallingSand jar file] (https://github.com/04samuell/fallingsand/blob/main/FallingSand.jar) or download <code>FallingSand.jar</code> from root of project directory.
+Run the project by navigating to directory containing <code>.jar</code> file and run <code>java -jar FallingSand.jar</code>. 
 
 ## Gradle
 
