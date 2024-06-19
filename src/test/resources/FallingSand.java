@@ -2,6 +2,9 @@ import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
 
+/**
+ * Class to represent the grid of sand grains in the Falling Sand game.
+ */
 public class FallingSand {
 
     public Grain[][] grid;
@@ -18,6 +21,9 @@ public class FallingSand {
     public static final int HEIGHT = 800;
     public static final int CELL_SIZE = 10;
 
+    /**
+     * Constructor for the FallingSand class.
+     */
     public FallingSand() {
         rcs = new RainbowColourScheme();
         gui = new FallingSandGUI(this);
@@ -32,6 +38,12 @@ public class FallingSand {
         timer.start();
     }
 
+
+    /**
+     * Creates a grid of sand where each element is null.
+     * 
+     * @return the null grid.
+     */
     public Grain[][] getZeroGrid() {
         Grain[][] newGrid = new Grain[(HEIGHT / CELL_SIZE)-7][(WIDTH / CELL_SIZE)];
         for (int i = 0; i < newGrid.length; i++) {
@@ -42,6 +54,13 @@ public class FallingSand {
         return newGrid;
     }
 
+
+    /**
+     * Method to place sand on the grid.
+     * 
+     * @param row the row of the sand to be placed.
+     * @param col the column of the sand to be placed
+     */
     public void sandPlaced(int row, int col) {
         if(grey) {
             grid[row][col] = new Grain(Color.gray);
@@ -56,6 +75,11 @@ public class FallingSand {
         numberSandPlaced++;
     }
 
+
+    /**
+     * Method to get the next grid (frame of the simulation).
+     * Loops through the current grid and determines the position of the sand for the next frame.
+     */
     public void getNextGrid() {
         Grain[][] newGrid = getZeroGrid();
         for (int i = 0; i < grid.length; i++) {
@@ -67,7 +91,17 @@ public class FallingSand {
         drawGrid();
     }
 
-    public void determinePlacement(Grain[][] newGrid, int i, int j) {
+
+    /**
+     * Helper method for getNextGrid.
+     * Determines the placement of the sand for the next frame based off
+     * the previous frame. If the sand has nothing below it, it will fall.
+     * 
+     * @param newGrid the new grid to be updated.
+     * @param i the row index of the current sand grain we are considering .
+     * @param j the column index of the current sand grain we are considering.
+     */
+    private void determinePlacement(Grain[][] newGrid, int i, int j) {
         if (grid[i][j] != null && i < grid.length - 1 && grid[i + 1][j] == null) { // if cell is sand and cell below is
             newGrid[i + 1][j] = grid[i][j];
         } else if(grid[i][j] != null && i < grid.length -1 && j > 0 && j < grid[i].length-1 && grid[i+1][j+1] == null && grid[i+1][j-1] == null) { // if in bounds and cell below taken but either side of cell below is empty
@@ -86,11 +120,11 @@ public class FallingSand {
     }
 
 
-    public void shadeCell(Graphics g, Color color, int i, int j) {
-        g.setColor(color);
-        g.fillRect(j * CELL_SIZE, i * CELL_SIZE, CELL_SIZE, CELL_SIZE);
-    }
-
+    /**
+     * Method to draw the grid.
+     * Loops through the grid and shades each cell to the offScreenImage.
+     * Finally, draws the result to the screen.
+     */
     public void drawGrid() {
         Graphics offScreenGraphics = gui.offScreenImage.getGraphics();
         offScreenGraphics.clearRect(0, 0, WIDTH, HEIGHT);
@@ -111,6 +145,23 @@ public class FallingSand {
         panelGraphics.dispose();
     }
 
+    /**
+     * Method to shade a cell on the grid.
+     *  
+     * @param g the graphics object we are drawing to.
+     * @param color the colour of the sand grain to draw.
+     * @param i the row index of the current sand grain we are considering.
+     * @param j the column index of the current sand grain we are considering.
+     */
+    private void shadeCell(Graphics g, Color color, int i, int j) {
+        g.setColor(color);
+        g.fillRect(j * CELL_SIZE, i * CELL_SIZE, CELL_SIZE, CELL_SIZE);
+    }
+
+    /**
+     * String representation of the FallingSand class.
+     * Printed at the start of the program.
+     */
     public String toString() {
         String result = "";
         result += "*".repeat(60) + "\n\n";

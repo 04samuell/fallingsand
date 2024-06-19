@@ -5,6 +5,9 @@ import java.awt.event.*;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
 
+/**
+ * Class to construct the main GUI for the Falling Sand game. 
+ */
 public class FallingSandGUI {
 
     private FallingSand fs;
@@ -18,10 +21,18 @@ public class FallingSandGUI {
 
     private static final boolean DEBUGGING = true;
 
+    /**
+     * Constructor for the FallingSandGUI class.
+     * Stores a reference to the FallingSand instance.
+     * @param fs
+     */
     public FallingSandGUI(FallingSand fs) {
         this.fs = fs;
     }
 
+    /**
+     * Creates the GUI for the sand to be placed.
+     */
     public void createGUI() {
         frame = new JFrame("Falling Sand");
         setIcon();
@@ -40,7 +51,11 @@ public class FallingSandGUI {
 
     }
 
-    public void createAndAddMenuBar() {
+    /**
+     * Helper method in setting up GUI.
+     * Creates and adds the menu bar to the frame.
+     */
+    private void createAndAddMenuBar() {
         JMenuBar menuBar = new JMenuBar();
         menuBar.setLayout(new FlowLayout(FlowLayout.CENTER));
         JMenuItem clearMenuItem = new JMenuItem("Clear");
@@ -59,7 +74,11 @@ public class FallingSandGUI {
         frame.setJMenuBar(menuBar);
     }
 
-    public void setIcon() {
+    /**
+     * Helper method in setting up GUI. 
+     * Sets the icon for the frame.
+     */
+    private void setIcon() {
         try{
             String filepath;
             if(DEBUGGING) {
@@ -76,12 +95,20 @@ public class FallingSandGUI {
         }
     }
 
+    /**
+     * Listener for the clear button.
+     * Clears the grid of sand.
+     */
     public class ClearMenuItemListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             fs.grid = fs.getZeroGrid();
         }
     }
 
+    /**
+     * Listener for the thick sand button.
+     * Changes the thickness of the sand.
+     */
     public class ThickSandListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             if (fs.thick) {
@@ -92,6 +119,10 @@ public class FallingSandGUI {
         }
     }
 
+    /**
+     * Listener for the grey sand button.
+     * Changes the color of the sand to grey.
+     */
     public class GreySandListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             fs.yellow = false;
@@ -104,6 +135,10 @@ public class FallingSandGUI {
         }
     }
 
+    /**
+     * Listener for the yellow sand button. 
+     * Changes the color of the sand to yellow.
+     */
     public class YellowSandListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             fs.grey = false;
