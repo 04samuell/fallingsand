@@ -12,14 +12,16 @@ To play follow these steps:
 - Download the jar file: [FallingSand jar file] https://github.com/04samuell/fallingsand/blob/main/FallingSand.jar (follow the link and click 'view raw').
 - Run the project via the command line by navigating to directory containing <code>.jar</code> file and run <code>java -jar FallingSand.jar</code>. 
 
-## Gradle
+## Project Learnings 
+
+### Gradle
 
 - <code>gradle wrapper</code> to generate gradlew and gradlew.bat.
 - <code>./gradlew createMissingSourceDirs</code> to establish directory structure.
 - Set <code>defaultMainClassName</code> to java class containing main.
 - Use <code>gradle run</code> to run.
 
-## JAR Creation
+### JAR Creation
 
 - First compile files and specify bin directory so class files are put in there <code>javac -d src/test/resources/bin src/test/resources/*.java</code>.
 - Make MANIFEST.MF file inside same directory as <code>.class</code> files specifying the main class name as <code>Main-Class: package.className</code> or just <code>Main-Class: className</code> if in default package.
