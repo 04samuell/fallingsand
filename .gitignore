@@ -12,6 +12,5 @@ tmp/
 *.tgz
 *.tar.gz
 *.class
-*.jar
 .DS_Store
 !gradle-wrapper.jar
