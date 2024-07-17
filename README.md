@@ -9,7 +9,7 @@ As well as the actual system I was intersted in familiarising myself with settin
 ## Try it for yourself
 
 To play follow these steps:
-- Download the jar file: [FallingSand jar file] https://github.com/04samuell/fallingsand/blob/main/FallingSand.jar (follow the link and click 'view raw').
+- Download the jar file: [FallingSand jar file](https://github.com/04samuell/fallingsand/blob/main/FallingSand.jar) (click 'view raw' to download).
 - Run the project via the command line by navigating to directory containing <code>.jar</code> file and run <code>java -jar FallingSand.jar</code>. 
 
 ## Project Learnings 
